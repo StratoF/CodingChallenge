@@ -4,25 +4,25 @@ import webbrowser
 import base64
 
 def googlesearch():
-    # Authentifizierung Atlassian. Atlassian bietet hier eine ausführliche Dokumentation.
-    # Ich habe hierfür auf der Atalassian Website einen Token generiert,der zusammen mit der Mail die Payload für die Authentifizierung bildet.
-    # Am Ende gebe ich die Antwort des Servers zurück.
+    # Authentifizierung Atlassian. Atlassian bietet hier eine ausfÃ¼hrliche Dokumentation.
+    # Ich habe hierfÃ¼r auf der Atalassian Website einen Token generiert,der zusammen mit der Mail die Payload fÃ¼r die Authentifizierung bildet.
+    # Am Ende gebe ich die Antwort des Servers zurÃ¼ck.
     credentials = "Basic " + base64.b64encode(b'stratos.fourkalidis@gmx.de:tCQBHwcZDTvK530ZVOgCA981').decode("utf-8")
 
-    # Header Parameter für Login
+    # Header Parameter fÃ¼r Login
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
         "Authorization": credentials
     }
 
-    # URL für Login auf Atlassian
+    # URL fÃ¼r Login auf Atlassian
     url = "https://mysite.atlassian.net"
 
     # Send request and get response
     response = requests.get(url, headers=headers)
 
-    # Variables Keyword für die Googele Suche
+    # Variables Keyword fÃ¼r die Googele Suche
     user_input = input('Look for: ').replace(" ", "+")
 
     # Google Suche. Definition der URl.
@@ -41,10 +41,10 @@ def googlesearch():
     print(json_output)
     print('Login Respone:', response)
 
-    #Öffnen eines Tabs im Standardbrowser mit den Ergebnissen der Google-Sucher
+    #Ã–ffnen eines Tabs im Standardbrowser mit den Ergebnissen der Google-Suche
     webbrowser.open_new_tab(URL)
 
-#Schleife, damit sich die Applikation nach der Suchanfrage nicht schließt
+#Schleife, damit sich die Applikation nach der Suchanfrage nicht schlieÃŸt
 while True:
     googlesearch()
     userinput = input('To continue press c: ')
