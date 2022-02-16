@@ -1,12 +1,26 @@
 import requests
 import html_to_json
 import webbrowser
+import base64
 
 def googlesearch():
     # Authentifizierung Atlassian. Atlassian bietet hier eine ausführliche Dokumentation.
     # Ich habe hierfür auf der Atalassian Website einen Token generiert,der zusammen mit der Mail die Payload für die Authentifizierung bildet.
     # Am Ende gebe ich die Antwort des Servers zurück.
-    auth = requests.get('https://mysite.atlassian.net/', auth=('stratos.fourkalidis@gmx.de', '4V47hvLjoiCZCsV3b9AR8B21'))
+    credentials = "Basic " + base64.b64encode(b'stratos.fourkalidis@gmx.de:tCQBHwcZDTvK530ZVOgCA981').decode("utf-8")
+
+    # Set header parameters
+    headers = {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Authorization": credentials
+    }
+
+    # URL für Login auf Atlassian
+    url = "https://mysite.atlassian.net"
+
+    # Send request and get response
+    response = requests.get(url, headers=headers)
 
     # Variables Keyword für die Googele Suche
     user_input = input('Look for: ').replace(" ", "+")
@@ -25,7 +39,7 @@ def googlesearch():
     # Ausgabe JSON Antwort der Suchanfrage
     # Ausgabe Authentifizierung
     print(json_output)
-    print('Login Respone:', auth)
+    print('Login Respone:', response)
 
     #Öffnen eines Tabs im Standardbrowser mit den Ergebnissen der Google-Sucher
     webbrowser.open_new_tab(URL)
@@ -36,3 +50,4 @@ while True:
     userinput = input('To continue press c: ')
     if userinput != 'c':
         break
+
