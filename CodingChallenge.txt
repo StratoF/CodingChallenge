@@ -9,7 +9,7 @@ def googlesearch():
     # Am Ende gebe ich die Antwort des Servers zurück.
     credentials = "Basic " + base64.b64encode(b'stratos.fourkalidis@gmx.de:tCQBHwcZDTvK530ZVOgCA981').decode("utf-8")
 
-    # Set header parameters
+    # Header Parameter für Login
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
