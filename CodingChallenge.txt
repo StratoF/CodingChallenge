@@ -1,0 +1,38 @@
+import requests
+import html_to_json
+import webbrowser
+
+def googlesearch():
+    # Authentifizierung Atlassian. Atlassian bietet hier eine ausführliche Dokumentation.
+    # Ich habe hierfür auf der Atalassian Website einen Token generiert,der zusammen mit der Mail die Payload für die Authentifizierung bildet.
+    # Am Ende gebe ich die Antwort des Servers zurück.
+    auth = requests.get('https://mysite.atlassian.net/', auth=('stratos.fourkalidis@gmx.de', '4V47hvLjoiCZCsV3b9AR8B21'))
+
+    # Variables Keyword für die Googele Suche
+    user_input = input('Look for: ').replace(" ", "+")
+
+    # Google Suche. Definition der URl.
+    # Definition User-Agent als Schnittstelle zwischen Client und Server
+    # Die Anfrage mit den vorher definierten Angaben
+    URL = ('https://www.google.de/search?q=' + user_input + '&num=10')
+    fake_browser = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36'}
+    req = requests.get(URL, headers=fake_browser)
+
+    #Konvertieren der Google Antwort in JSON
+    text = req.text
+    json_output = html_to_json.convert(text)
+
+    # Ausgabe JSON Antwort der Suchanfrage
+    # Ausgabe Authentifizierung
+    print(json_output)
+    print('Login Respone:', auth)
+
+    #Öffnen eines Tabs im Standardbrowser mit den Ergebnissen der Google-Sucher
+    webbrowser.open_new_tab(URL)
+
+#Schleife, damit sich die Applikation nach der Suchanfrage nicht schließt
+while True:
+    googlesearch()
+    userinput = input('To continue press c: ')
+    if userinput != 'c':
+        break
